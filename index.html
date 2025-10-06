@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De mim para você</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #FFD1DC, #FF69B4); /* Soft pink gradient */
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before,
+        body::after {
+            content: '';
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            filter: blur(50px);
+            opacity: 0.6;
+        }
+
+        body::before {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 15%;
+            animation: floatBubble 8s ease-in-out infinite alternate;
+        }
+
+        body::after {
+            width: 150px;
+            height: 150px;
+            bottom: 15%;
+            right: 10%;
+            animation: floatBubble 10s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatBubble {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, 20px) scale(1.05); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: -1;
+            filter: blur(30px);
+            border-radius: 25px;
+        }
+
+        .title {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            color: #E91E63; /* Deeper pink */
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        input {
+            padding: 12px 18px;
+            margin-bottom: 25px;
+            width: 100%;
+            max-width: 280px;
+            font-size: 1.1em;
+            border: 2px solid #FFB6C1; /* Light pink border */
+            border-radius: 10px;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            color: #333;
+        }
+
+        input::placeholder {
+            color: #AAA;
+        }
+
+        input:focus {
+            border-color: #FF69B4; /* Hot pink on focus */
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
+        }
+
+        button {
+            padding: 14px 30px;
+            width: 100%;
+            max-width: 200px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            background: linear-gradient(45deg, #FF69B4, #FF1493); /* Hot pink to Deep pink gradient */
+            border: none;
+            color: white;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(255, 105, 180, 0.3);
+        }
+
+        .spinner {
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            border-top: 6px solid #FF1493; /* Deep pink for the spinning part */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 25px;
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.3);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Hearts for decoration */
+        .heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(255, 105, 180, 0.7); /* Hot pink */
+            transform: rotate(-45deg);
+            animation: floatHeart 6s ease-in-out infinite;
+            opacity: 0.8;
+            z-index: 0;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(255, 105, 180, 0.7);
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -15px;
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: 15px;
+        }
+
+        .heart:nth-child(1) { top: 5%; left: 10%; animation-delay: 0s; transform: scale(0.8) rotate(-45deg); }
+        .heart:nth-child(2) { top: 15%; right: 5%; animation-delay: 1.5s; transform: scale(1.1) rotate(-45deg); }
+        .heart:nth-child(3) { bottom: 10%; left: 20%; animation-delay: 3s; transform: scale(0.9) rotate(-45deg); }
+        .heart:nth-child(4) { bottom: 5%; right: 15%; animation-delay: 4.5s; transform: scale(1.2) rotate(-45deg); }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(0) scale(1) rotate(-45deg); opacity: 0.8; }
+            50% { transform: translateY(-20px) scale(1.05) rotate(-48deg); opacity: 1; }
+            100% { transform: translateY(0) scale(1) rotate(-45deg); opacity: 0.8; }
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            .container {
+                padding: 30px 20px;
+            }
+            input, button {
+                font-size: 1em;
+                padding: 10px 15px;
+            }
+            .spinner {
+                width: 40px;
+                height: 40px;
+                border-width: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
+    <div class="heart"></div>
+
+    <div class="container">
+        <div class="title">
+            <h1 id="frase">
+                Tem uma coisa que eu queria te contar!
+            </h1>
+        </div>
+        <input type="text" id="nome" placeholder="Digite seu nome">
+        <div id="spinner-container"></div> <!-- Container para o spinner -->
+        <button id="clicador">Enviar</button>
+    </div>
+
+    <script>
+        document.getElementById('clicador').addEventListener('click', function(){
+            const nome = document.getElementById('nome').value;
+            const botao = document.getElementById('clicador');
+            const input = document.getElementById('nome');
+            const spinnerContainer = document.getElementById('spinner-container');
+            const frase = document.getElementById('frase');
+
+            if (botao.textContent === 'Enviar') {
+                if (nome.trim()) { // Use trim() to check for non-empty string
+                    // Remove input and display spinner
+                    input.style.display = 'none';
+                    const spinner = document.createElement('div');
+                    spinner.classList.add('spinner');
+                    spinnerContainer.appendChild(spinner); // Add the spinner to its container
+
+                    // After 3 seconds, display the message and change the button to "Voltar"
+                    setTimeout(() => {
+                        spinner.remove();  // Remove the spinner
+                        frase.textContent = `${nome}, eu te amo!`;
+                        frase.style.color = '#E91E63'; // Ensure color remains consistent
+                        botao.textContent = 'Voltar';  // Change button text
+                    }, 3000);
+                } else {
+                    alert('Por favor, insira seu nome');
+                }
+            } else {
+                // Reset the interface
+                input.style.display = 'block';
+                input.value = '';
+                frase.textContent = 'Tem uma coisa que eu queria te contar!';
+                frase.style.color = '#E91E63'; // Reset color
+                botao.textContent = 'Enviar';
+                spinnerContainer.innerHTML = ''; // Clear the spinner container
+            }
+        });
+    </script>
+</body>
+</html>
